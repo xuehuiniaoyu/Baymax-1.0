@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    
+    <url>
+     <loc>/Activity/</loc>
+     <lastmod>2017-08-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/ContentProvider/</loc>
+     <lastmod>2017-08-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/Controller/</loc>
+     <lastmod>2017-08-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/DB/</loc>
+     <lastmod>2017-08-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/Reflect工具类/</loc>
+     <lastmod>2017-08-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/aop拦截/</loc>
+     <lastmod>2017-08-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/service/</loc>
+     <lastmod>2017-08-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+</urlset>
