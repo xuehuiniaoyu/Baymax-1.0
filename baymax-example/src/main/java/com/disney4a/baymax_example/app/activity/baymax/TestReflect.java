@@ -26,6 +26,9 @@ public class TestReflect extends BaymaxCompatActivity {
 
     @ViewSelector.GetViewById(R.id.text3)
     private AppCompatTextView text3;
+
+    @ViewSelector.GetViewById(R.id.text4)
+    private AppCompatTextView text4;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,5 +47,10 @@ public class TestReflect extends BaymaxCompatActivity {
         Object activityThread = reflect.clear().on(Baymax.single().getSysHook()).get("activityThread");
         Object obj = reflect.clear().on(activityThread).get("mBoundApplication.info.mPackageName");
         text3.setText("obj="+obj);
+
+        UserInfo userInfo1 = reflect.clear().on("com.disney4a.baymax_example.app.entity.UserInfo")
+                .constructor(String.class)
+                .newInstance("操作员");
+        text4.setText(userInfo1.getUserName());
     }
 }

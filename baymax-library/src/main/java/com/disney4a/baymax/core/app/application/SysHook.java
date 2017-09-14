@@ -67,6 +67,9 @@ public final class SysHook {
     // 反射工具
     private Reflect reflect;
 
+    /**
+     * 监听接口
+     */
     public interface AOP_Listener {
         void aop_onBeforeRequestIntercept(String name, Method method, Object[] args);
 
@@ -77,6 +80,9 @@ public final class SysHook {
         void aop_onAfterHandleMessageIntercept(Message msg);
     }
 
+    /**
+     * 监听接口对象
+     */
     public static class SimpleAOP_Listener implements AOP_Listener {
         @Override
         public void aop_onBeforeRequestIntercept(String name, Method method, Object[] args) {

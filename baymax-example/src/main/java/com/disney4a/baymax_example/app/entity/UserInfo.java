@@ -10,6 +10,13 @@ public class UserInfo extends DbEntity {
     @Column(unique = true)
     private String userName;
 
+    public UserInfo() {
+    }
+
+    public UserInfo(String userName) {
+        this.userName = userName;
+    }
+
     public String getUserName() {
         return userName;
     }

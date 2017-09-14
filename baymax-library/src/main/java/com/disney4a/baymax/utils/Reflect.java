@@ -1,5 +1,6 @@
 package com.disney4a.baymax.utils;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -17,6 +18,40 @@ public class Reflect {
     private String methodName;
     // 方法参数
     private Class<?>[] methodArgs;
+
+    public final static class ConstructorInfo {
+        Class<?> clz;
+        Class<?>[] parameterTypes;
+        public ConstructorInfo(Class<?> clz, Class<?>[] parameterTypes) {
+            this.clz = clz;
+            this.parameterTypes = parameterTypes;
+        }
+
+        /**
+         * 创建对象
+         * @param objects
+         * @param <T>
+         * @return
+         */
+        public <T> T newInstance(Object ... objects) {
+            try {
+                Constructor constructor = this.clz.getConstructor(parameterTypes);
+                try {
+                    return (T) constructor.newInstance(objects);
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            } catch (NoSuchMethodException e) {
+                throw new RuntimeException(e.getMessage());
+            }
+            return null;
+        }
+
+    }
 
     /**
      * 创建一个新对象
@@ -59,6 +94,34 @@ public class Reflect {
     }
 
     /**
+     * 锁定对象（到类）【返回本身】
+     * @param className
+     * @return
+     */
+    public Reflect on(String className) {
+        try {
+            this.clz = Class.forName(className);
+        } catch (ClassNotFoundException e) {
+            throw new NoClassDefFoundError(e.getMessage());
+        }
+        return this;
+    }
+
+    /**
+     * 锁定对象（到类）【返回本身】
+     * @param className
+     * @return
+     */
+    public Reflect on(String className, ClassLoader classLoader) {
+        try {
+            this.clz = classLoader.loadClass(className);
+        } catch (ClassNotFoundException e) {
+            throw new NoClassDefFoundError(e.getMessage());
+        }
+        return this;
+    }
+
+    /**
      * 锁定方法【返回本身】
      * @param name
      * @param args
@@ -68,6 +131,15 @@ public class Reflect {
         this.methodName = name;
         this.methodArgs = args;
         return this;
+    }
+
+    /**
+     * 构造
+     * @param parameterTypes
+     * @return
+     */
+    public ConstructorInfo constructor(Class<?> ... parameterTypes) {
+        return new ConstructorInfo(clz, parameterTypes);
     }
 
     /**

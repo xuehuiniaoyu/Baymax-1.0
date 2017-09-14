@@ -39,7 +39,9 @@ public class ActivityPackaging {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        cxt.startActivity(new Intent(context, activity));
+        Intent intent = new Intent(context, activity);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        cxt.startActivity(intent);
     }
 
     /**
@@ -56,6 +58,7 @@ public class ActivityPackaging {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         cxt.startActivity(intent);
     }
 }
