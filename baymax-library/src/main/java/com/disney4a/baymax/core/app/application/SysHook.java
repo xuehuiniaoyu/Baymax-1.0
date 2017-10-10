@@ -12,7 +12,6 @@ import android.content.pm.ProviderInfo;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.util.ArrayMap;
 import android.util.Log;
 
 import com.disney4a.baymax.core.packaging.ProviderPackaging;
@@ -25,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by tjy on 2017/8/15 0015.
@@ -265,7 +265,7 @@ public final class SysHook {
                 reflect.clear().on(serviceInfoProxy.info).set("name", name);
 //                reflect.clear().on(proxyIntent.getComponent()).set("mClass", name);
 //                proxyIntent.putExtras(realIntent.getExtras());
-                ArrayMap<IBinder, Service> mService = reflect.clear().on(activityThread).get("mServices");
+                Map<IBinder, Service> mService = reflect.clear().on(activityThread).get("mServices");
                 Service service = mService.get(token);
                 Object context = reflect.on(service).get("mBase");
                 try {
