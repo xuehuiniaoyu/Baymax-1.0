@@ -21,7 +21,7 @@ allprojects {
 
 dependencies {
 	...
-	compile 'com.github.xuehuiniaoyu:Baymax:[Latest release]'
+	compile 'com.github.xuehuiniaoyu:Baymax-1.0:[Latest release]'
 }
 
 ```
