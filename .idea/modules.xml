@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Baymax.iml" filepath="$PROJECT_DIR$/Baymax.iml" />
+      <module fileurl="file://$PROJECT_DIR$/baymax-example/baymax-example.iml" filepath="$PROJECT_DIR$/baymax-example/baymax-example.iml" />
+      <module fileurl="file://$PROJECT_DIR$/baymax-library/baymax-library.iml" filepath="$PROJECT_DIR$/baymax-library/baymax-library.iml" />
+    </modules>
+  </component>
+</project>
