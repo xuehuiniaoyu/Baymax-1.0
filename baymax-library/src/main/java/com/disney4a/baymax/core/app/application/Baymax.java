@@ -38,6 +38,13 @@ import java.util.List;
  */
 
 public class Baymax {
+
+    public static final class IntentConfig {
+        /** 原生标记，使用该标记后走系统原生鉴权方法，也就不再免注册 **/
+        public static final String NATIVE_FLAG = "native_flag";
+
+    }
+
     private HashMap<String, ActivityPackaging> activityPackagingHashMap = new HashMap<>();
     private HashMap<String, ServicePackaging> servicePackagingHashMap = new HashMap<>();
     private HashMap<String, ProviderPackaging> providerPackagingHashMap = new HashMap<>();

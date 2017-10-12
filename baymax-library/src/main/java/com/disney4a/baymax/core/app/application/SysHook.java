@@ -145,11 +145,14 @@ public final class SysHook {
                     }
                 }
                 if (index != -1) {
-                    Intent proxyIntent = new Intent();
-                    ComponentName componentName = new ComponentName(SysHook.this.context.getPackageName(), mappings.get(methodName).getName());
-                    proxyIntent.setComponent(componentName);
-                    proxyIntent.putExtra("bindIntent", intent);
-                    args[index] = proxyIntent;
+                    boolean nativeFlag = intent.getBooleanExtra(Baymax.IntentConfig.NATIVE_FLAG, false);
+                    if(!nativeFlag) {
+                        Intent proxyIntent = new Intent();
+                        ComponentName componentName = new ComponentName(SysHook.this.context.getPackageName(), mappings.get(methodName).getName());
+                        proxyIntent.setComponent(componentName);
+                        proxyIntent.putExtra("bindIntent", intent);
+                        args[index] = proxyIntent;
+                    }
                 }
                 return intent;
             }

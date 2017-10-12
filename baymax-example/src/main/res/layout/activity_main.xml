@@ -75,6 +75,13 @@
                 android:textAllCaps="false"
                 android:text="权限管理（PermissionsManagement）" />
 
+            <Button
+                android:id="@+id/systemInstaller"
+                android:text="系統安裝"
+                android:textAllCaps="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
             <TextView
                 android:id="@+id/baiduResult"
                 android:layout_width="fill_parent"

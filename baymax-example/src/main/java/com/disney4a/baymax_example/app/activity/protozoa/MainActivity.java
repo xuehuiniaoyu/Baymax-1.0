@@ -12,7 +12,9 @@ import com.disney4a.baymax.core.app.activity.BaymaxCompatActivity;
 import com.disney4a.baymax.core.app.application.Baymax;
 import com.disney4a.baymax.utils.ViewSelector;
 import com.disney4a.baymax_example.R;
+import com.disney4a.baymax_example.app.utils.PackageUtil;
 
+import java.io.File;
 import java.util.Timer;
 
 @Tag_Activity(name = "main")
@@ -38,7 +40,8 @@ public class MainActivity extends BaymaxCompatActivity {
             R.id.testStartController,
             R.id.testDB,
             R.id.testReflect,
-            R.id.permissionsManagement
+            R.id.permissionsManagement,
+            R.id.systemInstaller
     })
     public void onClick(View v) {
         switch (v.getId()) {
@@ -75,6 +78,10 @@ public class MainActivity extends BaymaxCompatActivity {
             }
             case R.id.permissionsManagement: {
                 Baymax.single().activity("permissionsManagement").start();
+                break;
+            }
+            case R.id.systemInstaller: {
+                PackageUtil.installBySystem(this, new File(getCacheDir(), "a.txt").getAbsolutePath());
                 break;
             }
         }
