@@ -81,7 +81,7 @@ public class MainActivity extends BaymaxCompatActivity {
                 break;
             }
             case R.id.systemInstaller: {
-                PackageUtil.installBySystem(this, new File(getCacheDir(), "a.txt").getAbsolutePath());
+                PackageUtil.installBySystem(this, new File(getCacheDir(), "a.apk").getAbsolutePath());
                 break;
             }
         }

@@ -229,7 +229,11 @@ public final class SysHook {
                     mServiceInfos.put(token, serviceInfoProxy);
                     break;
                 case 115: // SERVICE_ARGS
-                    handleLaunchService(msg);
+                    try { 
+						handleLaunchService(msg);
+					} catch(Exception e) {
+					
+					}
                     break;
                 case 116: // STOP_SERVICE
                     mServiceInfos.remove(msg.obj);
