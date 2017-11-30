@@ -43,6 +43,9 @@ import java.util.Map;
  */
 
 public final class SysHook {
+
+    public static final String TAG = SysHook.class.getSimpleName();
+
     private Context context;
 
     Object activityManager;
@@ -144,14 +147,28 @@ public final class SysHook {
                         break;
                     }
                 }
+                String className = null;
                 if (index != -1) {
-                    boolean nativeFlag = intent.getBooleanExtra(Baymax.IntentConfig.NATIVE_FLAG, false);
-                    if(!nativeFlag) {
+                    if(intent.getComponent() != null) {
+                        // 检查是否为系统内部类
+                        className = intent.getComponent().getClassName();
+                        Log.i(TAG, "class identification:" + className);
+                    }
+                    else {
+                        Log.i(TAG, "intent="+intent);
+                    }
+                }
+                if(className != null) {
+                    try {
+                        Class.forName(className); // 验证
                         Intent proxyIntent = new Intent();
                         ComponentName componentName = new ComponentName(SysHook.this.context.getPackageName(), mappings.get(methodName).getName());
                         proxyIntent.setComponent(componentName);
                         proxyIntent.putExtra("bindIntent", intent);
                         args[index] = proxyIntent;
+                    } catch (ClassNotFoundException e) {
+                        // 不能加载
+                        Log.e(TAG, className + " 不是进程内部类");
                     }
                 }
                 return intent;

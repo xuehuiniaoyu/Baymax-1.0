@@ -1,11 +1,17 @@
 package com.disney4a.baymax_example.app.activity.protozoa;
 
+import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.disney4a.baymax.annotations.Tag_Activity;
 import com.disney4a.baymax.core.app.activity.BaymaxCompatActivity;
@@ -29,7 +35,45 @@ public class MainActivity extends BaymaxCompatActivity {
         Log.i("MainActivity", "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if(!checkPermissions()) {
+            requestPermissions(this, 1001);
+        }
+        else {
+            init();
+        }
+    }
+
+    void init() {
         textView.setText("value="+getIntent().getStringExtra("hello"));
+    }
+
+    private String[] permissions = new String[] {
+            "android.permission.RECORD_AUDIO",
+    };
+
+    public boolean checkPermissions() {
+        for(String permission : permissions) {
+            if(ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED)
+                return false;
+        }
+        return true;
+    }
+
+    public void requestPermissions(Activity context, int requestCode) {
+        ActivityCompat.requestPermissions(context, permissions, requestCode);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == 1001) {
+            if(checkPermissions()) {
+                init();
+            }
+            else {
+                Toast.makeText(this, "权限请求失败！", Toast.LENGTH_SHORT).show();
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @ViewSelector.OnClick(ids = {

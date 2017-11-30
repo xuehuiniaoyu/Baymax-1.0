@@ -138,3 +138,7 @@ correspondents参数为自动创建，只要通过Path注解的方法都必须�
 
 Please follow this example
 
+
+新增修改：
+
+不再通过 intent.putExtra(Baymax.IntentConfig.NATIVE_FLAG, true); 来区分外部类。系统Intent直接使用，不再被限制。
