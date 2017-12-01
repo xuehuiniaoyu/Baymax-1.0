@@ -58,6 +58,11 @@ public class Baymax {
     private boolean hooked;
 
     /**
+     * 已经被执行过注解解析
+     */
+    private boolean played;
+
+    /**
      * Hook 工具
      */
     private SysHook mSysHook;
@@ -106,11 +111,20 @@ public class Baymax {
      * 開始
      */
     public final void play() {
-        if(!hooked) {
-            throw new RuntimeException("you must be hooked!");
+        // 是否重复执行play()方法
+        if(played)  {
+            throw new RuntimeException("You can't play multiple times!");
         }
-        List<Class<?>> all = new ArrayList<>();
+        // 是否执hook成功
+        if(!hooked) {
+            throw new RuntimeException("You must be hooked!");
+        }
+        // 没有指定注解所在包
+        if(annotationsPackages == null) {
+            throw new RuntimeException("AnnotationsPackages cannot be empty!");
+        }
 
+        List<Class<?>> all = new ArrayList<>();
         for(String annotationsPackage : annotationsPackages) {
             List<Class<?>> packageClasses = ClassScanner.getAllClasses(annotationsPackage);
             all.addAll(packageClasses);
@@ -178,6 +192,7 @@ public class Baymax {
             }
         }
         Log.i("DEBUG", this+"");
+        played = true;
     }
 
     /**

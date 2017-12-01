@@ -248,7 +248,7 @@ public final class SysHook {
                 case 115: // SERVICE_ARGS
                     try { 
 						handleLaunchService(msg);
-					} catch(Exception e) {
+					} catch(Throwable e) {
 					
 					}
                     break;

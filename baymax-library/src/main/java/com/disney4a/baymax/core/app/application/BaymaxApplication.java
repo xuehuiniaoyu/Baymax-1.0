@@ -2,6 +2,7 @@ package com.disney4a.baymax.core.app.application;
 
 import android.content.Context;
 
+import com.disney4a.baymax.annotations.Tag_Application;
 import com.disney4a.baymax.core.base.ProxyActivity;
 import com.disney4a.baymax.core.base.ProxyService;
 
@@ -46,6 +47,12 @@ import org.litepal.LitePalApplication;
 public class BaymaxApplication extends LitePalApplication {
     @Override
     public void onCreate() {
+        // 先检查是否有注解
+        Tag_Application application = this.getClass().getAnnotation(Tag_Application.class);
+        if(application != null) {
+            String[] annotationsPackages = application.annotationsPackages();
+            Baymax.single().setAnnotationsPackage(annotationsPackages).play();
+        }
         super.onCreate();
     }
 
