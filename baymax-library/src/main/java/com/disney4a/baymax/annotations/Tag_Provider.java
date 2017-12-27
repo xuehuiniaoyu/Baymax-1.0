@@ -16,4 +16,6 @@ public @interface Tag_Provider {
      * @return
      */
     String name();
+
+    boolean exported() default false;
 }

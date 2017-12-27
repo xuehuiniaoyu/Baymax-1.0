@@ -47,12 +47,6 @@ import org.litepal.LitePalApplication;
 public class BaymaxApplication extends LitePalApplication {
     @Override
     public void onCreate() {
-        // 先检查是否有注解
-        Tag_Application application = this.getClass().getAnnotation(Tag_Application.class);
-        if(application != null) {
-            String[] annotationsPackages = application.annotationsPackages();
-            Baymax.single().setAnnotationsPackage(annotationsPackages).play();
-        }
         super.onCreate();
     }
 
@@ -60,5 +54,11 @@ public class BaymaxApplication extends LitePalApplication {
     protected void attachBaseContext(Context base) {
         Baymax.initialize(base).hook(ProxyActivity.class, ProxyService.class);
         super.attachBaseContext(base);
+        // 先检查是否有注解
+        Tag_Application application = this.getClass().getAnnotation(Tag_Application.class);
+        if(application != null) {
+            String[] annotationsPackages = application.annotationsPackages();
+            Baymax.single().setAnnotationsPackage(annotationsPackages).play();
+        }
     }
 }

@@ -11,6 +11,9 @@
 
         <activity android:name=".core.base.ProxyActivity" />
         <service android:name=".core.base.ProxyService" />
+        <provider
+            android:authorities="baymax-proxy-cp"
+            android:name="com.disney4a.baymax.core.base.ProxyContentProvider" />
 
     </application>
 

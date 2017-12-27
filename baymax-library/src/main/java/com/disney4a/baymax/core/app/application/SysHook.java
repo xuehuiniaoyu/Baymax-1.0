@@ -127,11 +127,18 @@ public final class SysHook {
 
         class AmsInvocationHandler implements InvocationHandler {
             private Object iActivityManagerObject;
+
             /**
              * 系统中可以被使用的ProviderInfo对象，一般系统启动后都会调用一些ContentProvider
              * 我们通过拦截获取这个ProviderInfo对象作为载体，将来在这个载体上复制出新的ProviderInfo
              */
             private ProviderInfo availableProviderInfo;
+
+
+            /**
+             * ContentProvider是否加载过
+             */
+            private boolean localContentProvidersIsAdded;
 
             public AmsInvocationHandler(Object iActivityManagerObject) {
                 this.iActivityManagerObject = iActivityManagerObject;
@@ -186,7 +193,30 @@ public final class SysHook {
                 Object result;
                 update_all_aop_onBeforeRequest("sys->" + method.getName(), method, args);
                 result = method.invoke(iActivityManagerObject, args);
-                if (method.getName().contains("getContentProvider")) {
+                if(method.getName().contains("publishContentProviders") && !localContentProvidersIsAdded) {
+                    localContentProvidersIsAdded = true;
+                    Log.i(TAG, "method name = "+method.getName());
+                    ArrayList list = (ArrayList) args[1];
+                    if(list != null && list.size() > 0) {
+                        availableProviderInfo = reflect.clear().on(list.get(0)).get("info");
+                        Object mPackageInfo = reflect.clear().on(context).get("mPackageInfo");
+                        ApplicationInfo mApplicationInfo = reflect.clear().on(mPackageInfo).get("mApplicationInfo");
+                        // 安装Provider
+                        Collection<ProviderPackaging> c = Baymax.single().getProviderPackagingHashMap().values();
+                        List<ProviderInfo> providerInfos = new ArrayList<>();
+                        for (ProviderPackaging packaging : c) {
+                            ProviderInfo providerInfo = new ProviderInfo(availableProviderInfo);
+                            providerInfo.authority = packaging.getName();
+                            providerInfo.name = packaging.getProvider().getName();
+                            providerInfo.applicationInfo = new ApplicationInfo(mApplicationInfo);
+                            providerInfo.exported = packaging.isExported();
+                            providerInfos.add(providerInfo);
+                        }
+                        reflect.clear().on(activityThread).method("installContentProviders", Context.class, List.class).invoke(context, providerInfos);
+                        Log.i("INFO", "installed provider count " + c.size());
+                    }
+                }
+                /*if (method.getName().contains("getContentProvider")) {
                     if (result != null && availableProviderInfo == null) {
                         availableProviderInfo = reflect.clear().on(result).get("info");
                         Object mPackageInfo = reflect.clear().on(context).get("mPackageInfo");
@@ -199,12 +229,13 @@ public final class SysHook {
                             providerInfo.authority = packaging.getName();
                             providerInfo.name = packaging.getProvider().getName();
                             providerInfo.applicationInfo = new ApplicationInfo(mApplicationInfo);
+                            providerInfo.exported = packaging.isExported();
                             providerInfos.add(providerInfo);
                         }
                         reflect.clear().on(activityThread).method("installContentProviders", Context.class, List.class).invoke(context, providerInfos);
                         Log.i("INFO", "installed provider count " + c.size());
                     }
-                }
+                }*/
                 update_all_aop_onAfterRequest("sys->" + method.getName(), method, args);
                 return result;
             }

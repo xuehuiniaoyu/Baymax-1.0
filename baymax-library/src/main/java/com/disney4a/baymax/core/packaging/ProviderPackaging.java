@@ -8,6 +8,7 @@ import android.content.ContentProvider;
 
 public class ProviderPackaging {
     private String name;
+    private boolean exported;
     private Class<? extends ContentProvider> provider;
 
     public ProviderPackaging(String name, Class<? extends ContentProvider> provider) {
@@ -21,5 +22,13 @@ public class ProviderPackaging {
 
     public Class<? extends ContentProvider> getProvider() {
         return provider;
+    }
+
+    public boolean isExported() {
+        return exported;
+    }
+
+    public void setExported(boolean exported) {
+        this.exported = exported;
     }
 }

@@ -154,6 +154,7 @@ public class Baymax {
                     String name = provider.name();
                     Class<? extends ContentProvider> className = (Class<? extends ContentProvider>) clz;
                     ProviderPackaging providerPackaging = new ProviderPackaging(name, className);
+                    providerPackaging.setExported(provider.exported());
                     providerPackagingHashMap.put(providerPackaging.getName(), providerPackaging);
                 }
                 else if(annotation.annotationType() == Tag_Controller.class) {
